@@ -1,0 +1,14 @@
+CREATE FUNCTION GetAge1(@BirthDate Date)
+RETURNS INT
+AS
+BEGIN
+DECLARE @AGE INT
+SET @AGE = DATEDIFF(YEAR, @BirthDate, GETDATE()) -
+				CASE
+					WHEN (MONTH(@BirthDate) > MONTH(GETDATE())) OR
+						 (MONTH(@BirthDate) = MONTH(GETDATE()) AND DAY(@BirthDate) > DAY(GETDATE()))
+					THEN 1
+					ELSE 0
+				 END
+RETURN @AGE
+END
